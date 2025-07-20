@@ -1,0 +1,52 @@
+# Java build files
+target/
+*.class
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata
+
+# VSCode
+.vscode/
+
+# Environment
+.env
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot devtools
+.spring-boot-devtools.properties
+
+# Database
+*.h2.db
+*.mv.db
+
+# Test coverage / reports
+coverage/
+jacoco.exec
+build/
+
+# Backup files
+*~
+*.swp
+
+# Node / frontend (if present)
+node_modules/
+dist/
