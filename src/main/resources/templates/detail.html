@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Springスニペット</title>
+    </head>
+    <body>
+    <div>
+		<h2 th:text="${snippet.title + ' by ' + snippet.createdBy.userName}"></h2>
+        <small><span th:text="${'投稿日：' + snippet.createdAt}"></small>
+        <pre><span th:text="${'コード：' + snippet.code}"></pre>
+        <p><span th:text="${'説明：' + snippet.description}"></p>
+    </div>
+    </body>
+</html>

@@ -20,7 +20,7 @@
 	            <tr th:each="snippet:${snippets}">
 	                <td><span th:text="${snippet.createdBy.userName}"></td>
 					<td><span th:text="${snippet.createdAt}"></td>
-					<td><span th:text="${snippet.title}"></td>
+					<td><a th:href="@{/snippets/{id}(id=${snippet.id})}" th:text="${snippet.title}"></a></td>
 	            </tr>
 	            </tbody>
 	        </table>
