@@ -2,14 +2,17 @@ package com.example.snippet.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import com.example.snippet.entity.User;
 import com.example.snippet.repository.UserRepository;
+import com.example.snippet.security.CustomUserDetails;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -35,10 +38,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // Spring SecurityのUserオブジェクトを生成して返す
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),          // ユーザー名としてメールアドレスを使用
-                user.getPasswordHash(),   // パスワードハッシュ
-                authorities               // ユーザーの権限
-        );
+        return new CustomUserDetails(user);
     }
 }

@@ -2,6 +2,8 @@ package com.example.snippet.entity;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

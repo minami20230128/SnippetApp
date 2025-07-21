@@ -29,6 +29,8 @@ public class Snippet {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    
+    public Snippet() {}
 
     public Integer getId() {
 		return id;
