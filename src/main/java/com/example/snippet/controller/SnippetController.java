@@ -3,10 +3,12 @@ package com.example.snippet.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.snippet.repository.SnippetRepository;
 
 @Controller
+@RequestMapping("/snippets")
 public class SnippetController {
 	private final SnippetRepository snippetRepository;
 	

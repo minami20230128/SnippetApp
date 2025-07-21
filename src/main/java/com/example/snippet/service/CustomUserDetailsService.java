@@ -33,11 +33,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         } else {
             authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // 一般ユーザーロール
         }
-        
-        // ユーザーが非アクティブな場合は認証を拒否するなどのロジックを追加することも可能
-        if (!user.getIsActive()) {
-            throw new UsernameNotFoundException("User is not active: " + email);
-        }
 
         // Spring SecurityのUserオブジェクトを生成して返す
         return new org.springframework.security.core.userdetails.User(

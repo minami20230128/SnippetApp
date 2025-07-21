@@ -5,10 +5,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/accounts")
 public class AccountController {
+	@GetMapping("/login")
+	public String showLoginForm() {
+		return "login";
+	}
+	
 	@GetMapping("/signup")
-	public String Signup() {
+	public String showSignupForm() {
 		return "signup";
 	}
 }
