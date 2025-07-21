@@ -1,1 +1,29 @@
-hello
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Springスニペット</title>
+    </head>
+    <body>
+		<div th:if="${snippets.size == 0}">
+			<p>スニペットは登録されていません</p>
+		</div>
+		<div th:unless="${snippets.size == 0}">
+	        <table class="table">
+	            <thead>
+	                <tr>
+	                    <th>投稿者</th>
+	                    <th>投稿日</th>
+	                    <th>タイトル</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            <tr th:each="snippet:${snippets}">
+	                <td><span th:text="${snippet.createdBy.userName}"></td>
+					<td><span th:text="${snippet.createdAt}"></td>
+					<td><span th:text="${snippet.title}"></td>
+	            </tr>
+	            </tbody>
+	        </table>
+		</div>
+    </body>
+</html>

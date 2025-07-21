@@ -12,9 +12,20 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User {
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+	
+	@Column(name = "user_name", length = 45)
+    private String userName;
 
     @Column(name = "first_name", length = 45)
     private String firstName;
