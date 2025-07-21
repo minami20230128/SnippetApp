@@ -50,7 +50,12 @@ public class SnippetController {
 	public String edit(@PathVariable int id, Model model) {
 	    var snippet = this.snippetRepository.findById(id)
 	            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Snippet not found"));
-		model.addAttribute("snippet", snippet);
+	    var editSnippetInput = new EditSnippetInput();
+	    editSnippetInput.setId(snippet.getId());
+	    editSnippetInput.setTitle(snippet.getTitle());
+	    editSnippetInput.setCode(snippet.getCode());
+	    editSnippetInput.setDescription(snippet.getDescription());
+	    model.addAttribute("editSnippetInput", editSnippetInput);
 		return "edit";
 	}
 	
@@ -59,13 +64,15 @@ public class SnippetController {
 			@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors())
 		{
-			return "/{id}/edit";
+			model.addAttribute("editSnippetInput", editSnippetInput);
+			return "edit";
 		}
 		
 	    var snippet = this.snippetRepository.findById(id)
 	            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Snippet not found"));
 		snippet.setTitle(editSnippetInput.getTitle());
 		snippet.setCode(editSnippetInput.getCode());
+		snippet.setDescription(editSnippetInput.getDescription());
 		snippet.setUpdatedAt(LocalDateTime.now());
 		this.snippetRepository.save(snippet);
 		redirectAttributes.addFlashAttribute("message", "更新に成功しました。");
@@ -85,15 +92,15 @@ public class SnippetController {
 			@AuthenticationPrincipal CustomUserDetails userDetails, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors())
 		{
-			return "/new";
+			return "register";
 		}
 		
 		var snippet = new Snippet();
 		var user = userDetails.getUser();
 		snippet.setCreatedBy(user);
-		System.out.println(snippet.getCreatedBy().getUserName());
 		snippet.setTitle(registerSnippetInput.getTitle());
 		snippet.setCode(registerSnippetInput.getCode());
+		snippet.setDescription(registerSnippetInput.getDescription());
 		snippet.setCreatedAt(LocalDateTime.now());
 		this.snippetRepository.save(snippet);
 		redirectAttributes.addFlashAttribute("message", "登録に成功しました。");
