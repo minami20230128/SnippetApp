@@ -1,0 +1,49 @@
+package com.example.snippet.service;	
+
+import java.util.ArrayList;
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import com.example.snippet.entity.User;
+import com.example.snippet.repository.UserRepository;
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // メールアドレスでユーザーを検索
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        // ロール（権限）を設定
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        if (user.getIsSupervisor()) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 管理者ロール
+        } else {
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // 一般ユーザーロール
+        }
+        
+        // ユーザーが非アクティブな場合は認証を拒否するなどのロジックを追加することも可能
+        if (!user.getIsActive()) {
+            throw new UsernameNotFoundException("User is not active: " + email);
+        }
+
+        // Spring SecurityのUserオブジェクトを生成して返す
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),          // ユーザー名としてメールアドレスを使用
+                user.getPasswordHash(),   // パスワードハッシュ
+                authorities               // ユーザーの権限
+        );
+    }
+}
