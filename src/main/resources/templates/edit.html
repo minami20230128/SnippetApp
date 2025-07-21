@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>スニペット編集</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>スニペット編集</h1>
+
+    <form th:action="@{/snippets/{id}/edit(id=${snippet.id})}" th:object="${snippet}" method="post">
+		<input type="hidden" name="_method" value="put" />
+        <div>
+            <label for="title">タイトル:</label>
+            <input type="text" id="title" th:field="*{title}" required />
+        </div>
+        <div>
+            <label for="code">コード:</label>
+            <textarea id="code" th:field="*{code}" rows="10" cols="80" required></textarea>
+        </div>
+        <div>
+            <label for="description">説明:</label>
+            <textarea id="description" th:field="*{description}" rows="5" cols="80"></textarea>
+        </div>
+        <div>
+            <button type="submit">更新</button>
+        </div>
+    </form>
+
+    <p><a th:href="@{/snippets/{id}(id=${snippet.id})}">キャンセルして戻る</a></p>
+</body>
+</html>

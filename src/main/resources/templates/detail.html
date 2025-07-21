@@ -4,11 +4,16 @@
         <title>Springスニペット</title>
     </head>
     <body>
-    <div>
-		<h2 th:text="${snippet.title + ' by ' + snippet.createdBy.userName}"></h2>
-        <small><span th:text="${'投稿日：' + snippet.createdAt}"></small>
-        <pre><span th:text="${'コード：' + snippet.code}"></pre>
-        <p><span th:text="${'説明：' + snippet.description}"></p>
-    </div>
+	<form th:action="@{/snippets/{id}/edit(id=${snippet.id})}" th:object="${snippet}" method="get">
+	    <div>
+			<h2 th:text="${snippet.title + ' by ' + snippet.createdBy.userName}"></h2>
+	        <small><span th:text="${'投稿日：' + snippet.createdAt}"></small>
+	        <pre><span th:text="${'コード：' + snippet.code}"></pre>
+	        <p><span th:text="${'説明：' + snippet.description}"></p>
+	    </div>
+		<div>
+	        <button type="submit">更新</button>
+	    </div>
+	</form>
     </body>
 </html>
