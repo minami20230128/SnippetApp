@@ -2,6 +2,7 @@ package com.example.snippet.controller;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -32,9 +33,11 @@ public class SnippetController {
 	}
 	
 	@GetMapping("/")
-	public String index(Model model) {
-		var snippets = this.snippetRepository.findAll();
-		model.addAttribute("snippets", snippets);
+	public String index(Pageable pageable, Model model) {
+		var snippetsPage = this.snippetRepository.findAll(pageable);
+
+        model.addAttribute("snippetsPage", snippetsPage);
+		model.addAttribute("snippets", snippetsPage.getContent());
 		return "index";
 	}
 	

@@ -1,31 +1,46 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Springスニペット</title>
-    </head>
-    <body>
-		<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
-		<div th:if="${snippets.size == 0}">
-			<p>スニペットは登録されていません</p>
-		</div>
-		<div th:unless="${snippets.size == 0}">
-	        <table class="table">
-	            <thead>
-	                <tr>
-	                    <th>投稿者</th>
-	                    <th>投稿日</th>
-	                    <th>タイトル</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	            <tr th:each="snippet:${snippets}">
-	                <td><span th:text="${snippet.createdBy.userName}"></td>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Springスニペット</title>
+</head>
+<body>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <div th:if="${snippetsPage.totalElements == 0}">
+        <p>スニペットは登録されていません</p>
+    </div>
+
+    <div th:if="${snippetsPage.totalElements > 0}">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>投稿者</th>
+                    <th>投稿日</th>
+                    <th>タイトル</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="snippet : ${snippetsPage.content}">
+                    <td><span th:text="${snippet.createdBy.userName}"></span></td>
 					<td><span th:text="${snippet.createdAt}"></td>
-					<td><a th:href="@{/snippets/{id}(id=${snippet.id})}" th:text="${snippet.title}"></a></td>
-	            </tr>
-	            </tbody>
-	        </table>
-		</div>
-		<button onclick="location.href='/snippets/new'">新規登録</button>
-    </body>
+                    <td><a th:href="@{/snippets/{id}(id=${snippet.id})}" th:text="${snippet.title}"></a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ページネーション -->
+        <div>
+            <span th:if="${snippetsPage.hasPrevious()}">
+                <a th:href="@{/snippets/(page=${snippetsPage.number - 1})}">前へ</a>
+            </span>
+            <span th:text="${snippetsPage.number + 1}">1</span> / <span th:text="${snippetsPage.totalPages}">1</span>
+            <span th:if="${snippetsPage.hasNext()}">
+                <a th:href="@{/snippets/(page=${snippetsPage.number + 1})}">次へ</a>
+            </span>
+        </div>
+    </div>
+
+    <button onclick="location.href='/snippets/new'">新規登録</button>
+</body>
 </html>
