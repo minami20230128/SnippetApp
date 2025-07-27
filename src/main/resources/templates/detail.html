@@ -4,16 +4,32 @@
         <title>Springスニペット</title>
     </head>
     <body>
-	<form th:action="@{/snippets/{id}/edit(id=${snippet.id})}" th:object="${snippet}" method="get">
-	    <div>
-			<h2 th:text="${snippet.title + ' by ' + snippet.createdBy.userName}"></h2>
-	        <small><span th:text="${'投稿日：' + snippet.createdAt}"></small>
-	        <pre><span th:text="${'コード：' + snippet.code}"></pre>
-	        <p><span th:text="${'説明：' + snippet.description}"></p>
-	    </div>
-		<div>
-	        <button type="submit">更新</button>
-	    </div>
-	</form>
+        <form th:action="@{/snippets/{id}/edit(id=${snippet.id})}" th:object="${snippet}" method="get">
+            <div>
+                <h2 th:text="${snippet.title + ' by ' + snippet.createdBy.userName}"></h2>
+                <small><span th:text="${'投稿日：' + snippet.createdAt}"></span></small>
+                <pre><span th:text="${'コード：' + snippet.code}"></span></pre>
+                <p><span th:text="${'説明：' + snippet.description}"></span></p>
+            </div>
+            <div>
+                <button type="submit">更新</button>
+            </div>
+        </form>
+
+        <!-- コメント欄 -->
+        <div style="border: 1px solid #ccc; padding: 1em; margin-top: 2em;">
+            <h3>コメントの一覧</h3>
+            <div th:if="${#lists.isEmpty(snippet.comments)}">
+                <p>コメントはまだありません。</p>
+            </div>
+            <div th:each="comment : ${snippet.comments}">
+                <p th:text="${comment.comment}"></p>
+                <small>
+                    by <span th:text="${comment.createdBy.userName}"></span>さん　
+                    <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                </small>
+                <hr/>
+            </div>
+        </div>
     </body>
 </html>
