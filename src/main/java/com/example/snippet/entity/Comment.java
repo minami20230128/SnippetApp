@@ -28,7 +28,7 @@ public class Comment {
     private User createdBy;
     
     @ManyToOne
-    @JoinColumn(name = "snippet_id", insertable=false, updatable=false)
+    @JoinColumn(name = "snippet_id")
     private Snippet snippet;
 
 	@Column(name = "created_at")

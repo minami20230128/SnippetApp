@@ -30,6 +30,7 @@
                 </small>
                 <hr/>
             </div>
+			<button th:onclick="|location.href='@{/snippets/{id}/comments/new(id=${snippet.id})}'|">コメント</button>
         </div>
     </body>
 </html>
