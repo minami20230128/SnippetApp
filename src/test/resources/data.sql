@@ -1,2 +1,4 @@
 INSERT INTO users (user_name, first_name, last_name, password_hash, email, icon_url, is_supervisor, is_active, created_at, updated_at) VALUES ('taro', 'taro', 'sato', '$2a$10$Am2tn/7nPfQTn8T3RbQhLO9Xsceo81Bgnh7Ig8oWDPSglfIjfsNYu', 'example.com', NULL, true, true, '2025-07-19 00:00:00', NULL)
+INSERT INTO users (user_name, first_name, last_name, password_hash, email, icon_url, is_supervisor, is_active, created_at, updated_at) VALUES ('jiro', 'jiro', 'tanaka', '$2a$10$Am2tn/7nPfQTn8T3RbQhLO9Xsceo81Bgnh7Ig8oWDPSglfIjfsNYu', 'example.com', NULL, true, true, '2025-07-19 00:00:00', NULL)
 INSERT INTO snippets(title, code, description, created_by, created_at, updated_at) VALUES('example1', 'example1', 'example1', 1, '2025-07-20 00:00:00', NULL)
+INSERT INTO comments(comment, created_by, snippet_id, created_at) VALUES ('example1', 1, 1, '2025-07-20 00:00:00')
