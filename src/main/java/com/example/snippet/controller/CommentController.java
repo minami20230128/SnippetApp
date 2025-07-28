@@ -44,24 +44,26 @@ public class CommentController {
 	
 	@PostMapping("/comments/new")
 	public String register(
+			@PathVariable int snippetId,
 			@Validated RegisterCommentInput registerCommentInput, BindingResult bindingResult, 
 			@AuthenticationPrincipal CustomUserDetails userDetails, Model model, RedirectAttributes redirectAttributes
 			) {
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("registerCommentInput", registerCommentInput);
-			return "/comments/new";
+			return "comment";
 		}
 		
 		var comment = new Comment();
 		comment.setComment(registerCommentInput.getComment());
 		comment.setCreatedAt(LocalDateTime.now());
 		comment.setCreatedBy(userDetails.getUser());
-		var snippet = this.snippetRepository.findById(registerCommentInput.getSnippetId())
+		var snippet = this.snippetRepository.findById(snippetId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Snippet not found"));
 		comment.setSnippet(snippet);
 		this.commentRepository.save(comment);
+		redirectAttributes.addFlashAttribute("message", "コメントを投稿しました。");
 		
-		return String.format("redirect:/snippets/%d", registerCommentInput.getSnippetId());
+		return String.format("redirect:/snippets/%d", snippetId);
 	}
 }
