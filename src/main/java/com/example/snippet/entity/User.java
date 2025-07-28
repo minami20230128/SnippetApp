@@ -2,8 +2,6 @@ package com.example.snippet.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,40 +21,40 @@ public class User {
 	}
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
 	@Column(name = "user_name", length = 45)
-    private String userName;
+	private String userName;
 
-    @Column(name = "first_name", length = 45)
-    private String firstName;
+	@Column(name = "first_name", length = 45)
+	private String firstName;
 
-    @Column(name = "last_name", length = 45)
-    private String lastName;
+	@Column(name = "last_name", length = 45)
+	private String lastName;
 
-    @Column(name = "password_hash", length = 100)
-    private String passwordHash;
+	@Column(name = "password_hash", length = 100)
+	private String passwordHash;
 
-    @Column(name = "icon_url", length = 45)
-    private String iconUrl;
+	@Column(name = "icon_url", length = 45)
+	private String iconUrl;
 
-    @Column(length = 45)
-    private String email;
+	@Column(length = 45)
+	private String email;
 
-    @Column(name = "is_supervisor")
-    private Boolean isSupervisor;
+	@Column(name = "is_supervisor")
+	private Boolean isSupervisor;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+	@Column(name = "is_active")
+	private Boolean isActive;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-    
-    public Integer getId() {
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
+
+	public Integer getId() {
 		return id;
 	}
 

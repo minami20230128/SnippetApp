@@ -5,9 +5,9 @@ import jakarta.validation.constraints.Size;
 
 public class RegisterCommentInput {
 	private Integer snippet_id;
-	
+
 	@NotBlank
-	@Size(max=128)
+	@Size(max = 128)
 	private String comment;
 
 	public Integer getSnippetId() {

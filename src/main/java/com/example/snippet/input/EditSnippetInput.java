@@ -7,16 +7,16 @@ public class EditSnippetInput {
 	private Integer id;
 
 	@NotBlank
-	@Size(max=128)
-    private String title;
+	@Size(max = 128)
+	private String title;
 
 	@NotBlank
-    private String code;
+	private String code;
 
 	@NotBlank
-    private String description;
-	
-    public Integer getId() {
+	private String description;
+
+	public Integer getId() {
 		return id;
 	}
 

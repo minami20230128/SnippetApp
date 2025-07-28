@@ -24,36 +24,34 @@ import com.example.snippet.security.CustomUserDetails;
 @Controller
 @RequestMapping("/snippets/{snippetId}")
 public class CommentController {
-	
+
 	private final CommentRepository commentRepository;
 	private final SnippetRepository snippetRepository;
-	
+
 	public CommentController(CommentRepository commentRepository, SnippetRepository snippetRepository) {
 		this.commentRepository = commentRepository;
 		this.snippetRepository = snippetRepository;
 	}
-	
+
 	@GetMapping("/comments/new")
 	public String showCommentForm(Model model, @PathVariable int snippetId) {
 		var registerCommentInput = new RegisterCommentInput();
 		registerCommentInput.setSnippetId(snippetId);
 		model.addAttribute("registerCommentInput", registerCommentInput);
-		
+
 		return "comment";
 	}
-	
+
 	@PostMapping("/comments/new")
-	public String register(
-			@PathVariable int snippetId,
-			@Validated RegisterCommentInput registerCommentInput, BindingResult bindingResult, 
-			@AuthenticationPrincipal CustomUserDetails userDetails, Model model, RedirectAttributes redirectAttributes
-			) {
-		
-		if(bindingResult.hasErrors()) {
+	public String register(@PathVariable int snippetId, @Validated RegisterCommentInput registerCommentInput,
+			BindingResult bindingResult, @AuthenticationPrincipal CustomUserDetails userDetails, Model model,
+			RedirectAttributes redirectAttributes) {
+
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("registerCommentInput", registerCommentInput);
 			return "comment";
 		}
-		
+
 		var comment = new Comment();
 		comment.setComment(registerCommentInput.getComment());
 		comment.setCreatedAt(LocalDateTime.now());
@@ -63,7 +61,7 @@ public class CommentController {
 		comment.setSnippet(snippet);
 		this.commentRepository.save(comment);
 		redirectAttributes.addFlashAttribute("message", "コメントを投稿しました。");
-		
+
 		return String.format("redirect:/snippets/%d", snippetId);
 	}
 }

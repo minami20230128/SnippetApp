@@ -17,24 +17,24 @@ import jakarta.persistence.Table;
 @Table(name = "comments")
 public class Comment {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Lob
-    private String comment;
+	@Lob
+	private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", referencedColumnName = "id")
-    private User createdBy;
-    
-    @ManyToOne
-    @JoinColumn(name = "snippet_id")
-    private Snippet snippet;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by", referencedColumnName = "id")
+	private User createdBy;
+
+	@ManyToOne
+	@JoinColumn(name = "snippet_id")
+	private Snippet snippet;
 
 	@Column(name = "created_at")
-    private LocalDateTime createdAt;
-	
-    public Integer getId() {
+	private LocalDateTime createdAt;
+
+	public Integer getId() {
 		return id;
 	}
 

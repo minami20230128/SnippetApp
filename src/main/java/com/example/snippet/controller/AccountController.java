@@ -11,7 +11,7 @@ public class AccountController {
 	public String showLoginForm() {
 		return "login";
 	}
-	
+
 	@GetMapping("/signup")
 	public String showSignupForm() {
 		return "signup";

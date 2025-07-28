@@ -32,44 +32,37 @@ import com.example.snippet.security.CustomUserDetails;
 public class CommentControllerIntegrationTest {
 	@Autowired
 	private MockMvc mockMvc;
-	
-	@Autowired JdbcTemplate jdbcTemplate;
-	
+
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
 	@Test
 	public void test_コメントを投稿() throws Exception {
 		var user = new User();
-	    user.setId(2);
-	    user.setUserName("jiro");
-	    var userDetails = new CustomUserDetails(user);
-		
-		mockMvc.perform(
-			post("/snippets/1/comments/new")
-			.param("comment", "example2")
-			.with(csrf())
-			.with(authentication(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())))
-			)
-		.andExpect(status().is3xxRedirection())
-		.andExpect(redirectedUrl("/snippets/1"))
-		.andExpect(flash().attribute("message", "コメントを投稿しました。"));
-		
+		user.setId(2);
+		user.setUserName("jiro");
+		var userDetails = new CustomUserDetails(user);
+
+		mockMvc.perform(post("/snippets/1/comments/new").param("comment", "example2").with(csrf())
+				.with(authentication(
+						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()))))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/snippets/1"))
+				.andExpect(flash().attribute("message", "コメントを投稿しました。"));
+
 		var commentMap = jdbcTemplate.queryForMap("SELECT * FROM comments WHERE created_by = ?", "2");
 		assertThat(commentMap.get("comment")).isEqualTo("example2");
 	}
-	
+
 	@Test
 	public void test_投稿されたコメントが空文字() throws Exception {
 		var user = new User();
-	    user.setId(2);
-	    user.setUserName("jiro");
-	    var userDetails = new CustomUserDetails(user);
-	    
-		mockMvc.perform(
-			post("/snippets/1/comments/new")
-			.param("comment", "")
-			.with(csrf())
-			.with(authentication(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())))
-			)
-		.andExpect(status().isOk())
-		.andExpect(view().name("comment"));
+		user.setId(2);
+		user.setUserName("jiro");
+		var userDetails = new CustomUserDetails(user);
+
+		mockMvc.perform(post("/snippets/1/comments/new").param("comment", "").with(csrf())
+				.with(authentication(
+						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()))))
+				.andExpect(status().isOk()).andExpect(view().name("comment"));
 	}
 }

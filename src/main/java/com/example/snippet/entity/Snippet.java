@@ -19,35 +19,36 @@ import jakarta.persistence.Table;
 @Table(name = "snippets")
 public class Snippet {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Column(length = 128)
-    private String title;
+	@Column(length = 128)
+	private String title;
 
-    @Lob
-    private String code;
+	@Lob
+	private String code;
 
-    @Lob
-    private String description;
+	@Lob
+	private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", referencedColumnName = "id") // DB上のカラム名
-    private User createdBy;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by", referencedColumnName = "id") // DB上のカラム名
+	private User createdBy;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-    
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "snippet_id", referencedColumnName = "id")
-    private List<Comment> comments;
-    
-    public Snippet() {}
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 
-    public Integer getId() {
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "snippet_id", referencedColumnName = "id")
+	private List<Comment> comments;
+
+	public Snippet() {
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
